@@ -11,6 +11,9 @@ Labb 3
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
+
+std::vector<int>* primeNumbers(int numberOfValues);
+
 /// <summary>
 /// Generates random values
 /// </summary>

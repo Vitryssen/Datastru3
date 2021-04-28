@@ -7,6 +7,24 @@ Labb 3
 */
 #include "generation.h"
 
+std::vector<int>* primeNumbers(int numberOfValues) {
+	std::vector<bool> primes(numberOfValues + 1, true);
+	for (int p = 2; p * p <= numberOfValues; p++)
+	{
+		if (primes.at(p))
+		{
+			for (int i = p * p; i <= numberOfValues; i += p)
+				primes.at(i) = false;
+		}
+	}
+	std::vector<int>* output = new std::vector<int>;
+	for (int i = 2; i < numberOfValues; i++) {
+		if (primes.at(i))
+			output->push_back(i);
+	}
+	return output;
+}
+
 std::vector<int>* randomValues(int numberOfValues)
 {
 	std::vector<int>* randomValues = new std::vector<int>;

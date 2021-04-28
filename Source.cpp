@@ -18,10 +18,10 @@ int main() {
 	auto decreasing = [](int N) {std::vector<int>* data = monotonicDecreasing(N); return data; };
 	auto constant = [](int N) {std::vector<int>* data = constantValue(N); return data; };
 
-	int start = 1000;
-	int end = 10000;
-	int increment = 1000;
-	time_all(decreasing, start, end, increment);
+	std::vector<int>* test = primeNumbers(20);
+	for (int i = 0; i < test->size(); i++) {
+		std::cout << test->at(i) << std::endl;
+	}
 
 	return 0;
 }
