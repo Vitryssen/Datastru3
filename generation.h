@@ -12,33 +12,22 @@ Labb 3
 #include <iostream>
 #include <vector>
 
+struct Node {
+	Node(int data) :data(data), left(nullptr), right(nullptr) {};
+	int data;
+	Node* left;
+	Node* right;
+};
+
+struct HashNode {
+	HashNode(int data) :data(data), next(nullptr) {};
+	int data;
+	HashNode* next;
+};
+
 std::vector<int>* primeNumbers(int numberOfValues);
+std::vector<HashNode*> hashTable(std::vector<int>* vector);
+Node* binarySearchTree(std::vector<int>* vector, int start, int stop);
 
-/// <summary>
-/// Generates random values
-/// </summary>
-/// <param name="numberOfValues">number of values to generate</param>
-/// <returns>pointer to vector with generated values</returns>
-std::vector<int>* randomValues(int numberOfValues);
 
-/// <summary>
-/// Generates monotonic increasing values starting from 0
-/// </summary>
-/// <param name="numberOfValues">number of values to generate</param>
-/// <returns>pointer to vector with generated values</returns>
-std::vector<int>* monotonicIncreasing(int numberOfValues);
-
-/// <summary>
-/// Generates monotonic decreasing values starting from INT_MAX
-/// </summary>
-/// <param name="numberOfValues">number of values to generate</param>
-/// <returns>pointer to vector with generated values</returns>
-std::vector<int>* monotonicDecreasing(int numberOfValues);
-
-/// <summary>
-/// Generates constant values, first value given from rand()
-/// </summary>
-/// <param name="numberOfValues">number of values to generate</param>
-/// <returns>pointer to vector with generated values</returns>
-std::vector<int>* constantValue(int numberOfValues);
 #endif

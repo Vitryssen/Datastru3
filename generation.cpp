@@ -25,41 +25,34 @@ std::vector<int>* primeNumbers(int numberOfValues) {
 	return output;
 }
 
-std::vector<int>* randomValues(int numberOfValues)
-{
-	std::vector<int>* randomValues = new std::vector<int>;
-	for (int i = 0; i < numberOfValues; i++) {
-		randomValues->push_back(rand());
+Node* binarySearchTree(std::vector<int>* vector, int start, int stop) {
+	if (start <= stop) {
+		int mid = (start + stop) / 2;
+		Node* root = new Node(vector->at(mid));
+		root->left = binarySearchTree(vector, start, mid - 1);
+		root->right = binarySearchTree(vector, mid + 1, stop);
+		return root;
 	}
-	return randomValues;
+	else
+		return nullptr;
 }
 
-std::vector<int>* monotonicIncreasing(int numberOfValues)
-{
-	std::vector<int>* monotonicIncreasing = new std::vector<int>;
-	monotonicIncreasing->push_back(0);
-	for (int i = 1; i < numberOfValues; i++) {
-		monotonicIncreasing->push_back(rand() % 10 + monotonicIncreasing->at(i-1.0));
+std::vector<HashNode*> hashTable(std::vector<int>* vector) {
+	int size = vector->size() * 2;
+	std::vector<HashNode*>hashTable(size);
+	for (int i = 0; i < vector->size(); i++) {
+		HashNode* firstNode = new HashNode(vector->at(i));
+		int key = vector->at(i) % size;
+		if (hashTable[key] == nullptr) {
+			hashTable[key] = firstNode;
+		}
+		else {
+			HashNode* secondNode = hashTable[key];
+			while (secondNode->next != nullptr) {
+				secondNode = secondNode->next;
+			}
+			hashTable[key]->next = firstNode;
+		}
 	}
-	return monotonicIncreasing;
-}
-
-std::vector<int>* monotonicDecreasing(int numberOfValues)
-{
-	std::vector<int>* monotonicDecreasing = new std::vector<int>;
-	monotonicDecreasing->push_back(INT_MAX);
-	for (int i = 1; i < numberOfValues; i++) {
-		monotonicDecreasing->push_back(monotonicDecreasing->at(i-1.0) - (rand() % 10));
-	}
-	return monotonicDecreasing;
-}
-
-std::vector<int>* constantValue(int numberOfValues)
-{
-	std::vector<int>* constantValue = new std::vector<int>;
-	int value = rand();
-	for (int i = 0; i < numberOfValues; i++) {
-		constantValue->push_back(value);
-	}
-	return constantValue;
+	return hashTable;
 }
