@@ -43,7 +43,7 @@ void time_all(std::vector<int>* (*generate_data_funk)(int size), int start, int 
 /// <param name="sort_funk">function to use when sorting</param>
 /// <param name="vector">vector with values to sort</param>
 /// <param name="save_data">string with filename to use as output</param>
-void time_calculation(void(*sort_funk)(std::vector<int>*), std::vector<int>* vector, std::string save_data);
+void time_calculation(void(*sort_funk)(std::vector<int>*, int), std::vector<int>* container, std::string fileName);
 
 /// <summary>
 /// Get time for a given sorting algoritm and vector with generated data
@@ -51,5 +51,5 @@ void time_calculation(void(*sort_funk)(std::vector<int>*), std::vector<int>* vec
 /// <param name="sort">sorting function to use</param>
 /// <param name="vector">vector with generated values</param>
 /// <returns>time taken to sort vector</returns>
-float time(void(*sort)(std::vector<int>*), std::vector<int>* vector);
+float time(void(*sort)(std::vector<int>*, int), std::vector<int>* vector);
 #endif

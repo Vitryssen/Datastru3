@@ -9,29 +9,27 @@ Labb 3
 #include <iostream>
 void time_all(std::vector<int>* (*generate_data_funk)(int size), int start, int end, int increment)
 {
-	std::vector<std::string> fileNames = { "insertionSort.data", "selectionSort.data", "quickSort.data", "quickSortMed.data", "stdSort.data"};
+	std::vector<std::string> fileNames = { "seqSearch.data", "binSearch.data", "binTreeSearch.data", "hashSearch.data"};
 	clearFiles(fileNames);
-	auto insSort = [](std::vector<int>* vector) {insertionSort(vector); };
-	auto selSort = [](std::vector<int>* vector) {selectionSort(vector); };
-	auto qSort = [](std::vector<int>* vector) {quickSort(vector, 0, vector->size()-1, false); };
-	auto qSortMed = [](std::vector<int>* vector) {quickSort(vector, 0, vector->size() - 1, true); };
-	auto stdSort = [](std::vector<int>* vector) {std::sort(vector->begin(), vector->end()); };
+	auto seq = [](std::vector<int>* vector, int key) {seqSearch(vector, key); };
+	auto bin = [](std::vector<int>* vector, int key) {binSearch(vector, 0, vector->size()-1, key); };
+	auto binTree = [](std::vector<int>* vector, int key) {binTreeSearch(binarySearchTree(vector, 0, vector->size()-1), key); };
+	auto hash = [](std::vector<int>* vector,int key) {hashSearch(hashTable(vector), key); };
 
 	for (int N = start; N <= end; N += increment)
 	{
 		auto container = generate_data_funk(N);
-		time_calculation(insSort, container, fileNames[0]);
-		time_calculation(selSort, container, fileNames[1]);
-		time_calculation(qSort, container, fileNames[2]);
-		time_calculation(qSortMed, container, fileNames[3]);
-		time_calculation(stdSort, container, fileNames[4]);
+		time_calculation(seq, container, fileNames[0]);
+		time_calculation(bin, container, fileNames[1]);
+		time_calculation(binTree, container, fileNames[2]);
+		//time_calculation(hash, container, fileNames[3]);
 		delete container;
 	}
 }
 
-void time_calculation(void(*sort_funk)(std::vector<int>*), std::vector<int>* container, std::string fileName)
+void time_calculation(void(*sort_funk)(std::vector<int>*, int), std::vector<int>* container, std::string fileName)
 {
-	double samples = 5;
+	double samples = 50;
 	double squareTime = 0;
 	double totalTime = 0;
 	double avgTime;
@@ -53,14 +51,14 @@ void time_calculation(void(*sort_funk)(std::vector<int>*), std::vector<int>* con
 	std::string output = std::to_string(container->size()) + "\t" + std::to_string(avgTime) + "\t" + std::to_string(stdDev) + "\t#" + std::to_string(samples) + "\n";
 	write(fileName, output);
 }
-float time(void(*sort)(std::vector<int>*), std::vector<int>* vector)
+float time(void(*sort)(std::vector<int>*, int), std::vector<int>* vector)
 {
 
 	std::chrono::duration<double, std::milli> time(0);
 	auto copy_vector = *vector;
-
+	int random = rand();
 	auto start = std::chrono::steady_clock::now();
-	sort(&copy_vector);
+	sort(&copy_vector, random);
 	auto end = std::chrono::steady_clock::now();
 	time += (end - start);
 

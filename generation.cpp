@@ -8,21 +8,22 @@ Labb 3
 #include "generation.h"
 
 std::vector<int>* primeNumbers(int numberOfValues) {
-	std::vector<bool> primes(numberOfValues + 1, true);
-	for (int p = 2; p * p <= numberOfValues; p++)
-	{
-		if (primes.at(p))
-		{
-			for (int i = p * p; i <= numberOfValues; i += p)
-				primes.at(i) = false;
+	std::vector<int>* primes = new std::vector<int>;
+	primes->push_back(2);
+	int i = 3;
+	while (primes->size() < numberOfValues) {
+		bool prime = true;
+		for (int j = 0; j < primes->size() && primes->at(j) * primes->at(j) <= i; j++){
+			if (i % primes->at(j) == 0){
+				prime = false;
+				break;
+			}
 		}
+		if (prime)
+			primes->push_back(i);
+		i++;
 	}
-	std::vector<int>* output = new std::vector<int>;
-	for (int i = 2; i < numberOfValues; i++) {
-		if (primes.at(i))
-			output->push_back(i);
-	}
-	return output;
+	return primes;
 }
 
 Node* binarySearchTree(std::vector<int>* vector, int start, int stop) {
@@ -37,22 +38,22 @@ Node* binarySearchTree(std::vector<int>* vector, int start, int stop) {
 		return nullptr;
 }
 
-std::vector<HashNode*> hashTable(std::vector<int>* vector) {
+std::vector<HashNode*>* hashTable(std::vector<int>* vector) {
 	int size = vector->size() * 2;
-	std::vector<HashNode*>hashTable(size);
+	std::vector<HashNode*> hashtable(size);
 	for (int i = 0; i < vector->size(); i++) {
 		HashNode* firstNode = new HashNode(vector->at(i));
 		int key = vector->at(i) % size;
-		if (hashTable[key] == nullptr) {
-			hashTable[key] = firstNode;
+		if (hashtable[key] == nullptr) {
+			hashtable[key] = firstNode;
 		}
 		else {
-			HashNode* secondNode = hashTable[key];
+			HashNode* secondNode = hashtable[key];
 			while (secondNode->next != nullptr) {
 				secondNode = secondNode->next;
 			}
-			hashTable[key]->next = firstNode;
+			hashtable[key]->next = firstNode;
 		}
 	}
-	return hashTable;
+	return &hashtable;
 }

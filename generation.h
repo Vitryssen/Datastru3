@@ -26,7 +26,7 @@ struct HashNode {
 };
 
 std::vector<int>* primeNumbers(int numberOfValues);
-std::vector<HashNode*> hashTable(std::vector<int>* vector);
+std::vector<HashNode*>* hashTable(std::vector<int>* vector);
 Node* binarySearchTree(std::vector<int>* vector, int start, int stop);
 
 
