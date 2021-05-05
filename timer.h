@@ -5,16 +5,6 @@ anno1907
 Datastrukturer och algoritmer DT046G
 Labb 3
 */
-/*
-std::chrono::ur<chrono>.
-En mätserie för varje indata måste bestå av minst 5 tidsmätningar. Fler är bättre. Ju fler mätningar desto mindre mätfel.
-Vanliga misstag är
-•Sorteringen tar för vissa små indata för kort tid för att tidsmätningen ska ge ett riktigt värde. 
-	Ofta är klockan inte tillräckligt noggrann för att mäta korta tidsintervall.
-•Man försöker sortera indata som redan sorterats. Detta påverkar påtagligt flera av metodernas tidsmätningar.
-•Man mäter inte endast sorteringssteget utan även initierande program-kod. 
-	En vanlig fallgrop är att kopiera dataserien till sorteringsfunktionenistället för att ge pekare eller iteratorer till serien.
-*/
 #ifndef TIMER_H
 #define TIMER_H
 #include "time.h"
