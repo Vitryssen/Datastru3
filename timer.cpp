@@ -22,7 +22,7 @@ void time_all(std::vector<int>* (*generate_data_funk)(int size), int start, int 
 		time_calculation(seq, container, fileNames[0]);
 		time_calculation(bin, container, fileNames[1]);
 		time_calculation(binTree, container, fileNames[2]);
-		//time_calculation(hash, container, fileNames[3]);
+		time_calculation(hash, container, fileNames[3]);
 		delete container;
 	}
 }
@@ -55,10 +55,9 @@ float time(void(*sort)(std::vector<int>*, int), std::vector<int>* vector)
 {
 
 	std::chrono::duration<double, std::milli> time(0);
-	auto copy_vector = *vector;
 	int random = rand();
 	auto start = std::chrono::steady_clock::now();
-	sort(&copy_vector, random);
+	sort(vector, random);
 	auto end = std::chrono::steady_clock::now();
 	time += (end - start);
 
