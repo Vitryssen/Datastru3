@@ -41,5 +41,5 @@ void time_calculation(void(*sort_funk)(std::vector<int>*, int), std::vector<int>
 /// <param name="sort">sorting function to use</param>
 /// <param name="vector">vector with generated values</param>
 /// <returns>time taken to sort vector</returns>
-float time(void(*sort)(std::vector<int>*, int), std::vector<int>* vector);
+float time(void(*sort)(std::vector<int>*, int), std::vector<int>* vector, std::string fileName);
 #endif

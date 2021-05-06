@@ -27,7 +27,7 @@ void time_all(std::vector<int>* (*generate_data_funk)(int size), int start, int 
 	}
 }
 
-void time_calculation(void(*sort_funk)(std::vector<int>*, int), std::vector<int>* container, std::string fileName)
+void time_calculation(void(*search_func)(std::vector<int>*, int), std::vector<int>* container, std::string fileName)
 {
 	double samples = 50;
 	double squareTime = 0;
@@ -38,7 +38,7 @@ void time_calculation(void(*sort_funk)(std::vector<int>*, int), std::vector<int>
 
 	for (int i = 0; i < samples; i++)
 	{
-		auto current_time = time(sort_funk, container);
+		auto current_time = time(search_func, container, fileName);
 		totalTime += current_time;
 		squareTime += pow(current_time, 2);
 	}
@@ -51,15 +51,31 @@ void time_calculation(void(*sort_funk)(std::vector<int>*, int), std::vector<int>
 	std::string output = std::to_string(container->size()) + "\t" + std::to_string(avgTime) + "\t" + std::to_string(stdDev) + "\t#" + std::to_string(samples) + "\n";
 	write(fileName, output);
 }
-float time(void(*sort)(std::vector<int>*, int), std::vector<int>* vector)
+float time(void(*search)(std::vector<int>*, int), std::vector<int>* vector, std::string fileName)
 {
-
+	Node* rootContainer;
+	std::vector<HashNode*>* hashContainer;
 	std::chrono::duration<double, std::milli> time(0);
 	int random = rand();
-	auto start = std::chrono::steady_clock::now();
-	sort(vector, random);
-	auto end = std::chrono::steady_clock::now();
-	time += (end - start);
-
+	if (fileName == "binTreeSearch.data") {
+		rootContainer = binarySearchTree(vector, 0, vector->size() - 1);
+		auto start = std::chrono::steady_clock::now();
+		binTreeSearch(rootContainer, random);
+		auto end = std::chrono::steady_clock::now();
+		time += (end - start);
+	}
+	else if (fileName == "hashSearch.data") {
+		hashContainer = hashTable(vector);
+		auto start = std::chrono::steady_clock::now();
+		hashSearch(hashContainer, random);
+		auto end = std::chrono::steady_clock::now();
+		time += (end - start);
+	}
+	else {
+		auto start = std::chrono::steady_clock::now();
+		search(vector, random);
+		auto end = std::chrono::steady_clock::now();
+		time += (end - start);
+	}
 	return time.count();
 }
